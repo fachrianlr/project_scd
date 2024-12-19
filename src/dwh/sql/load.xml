@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<queries>
+    <query id="getCustomerById">
+        <![CDATA[
+            select * from customers where customer_id = :customer_id
+        ]]>
+    </query>
+
+    <query id="updateCustomerById">
+        <![CDATA[
+        UPDATE customers
+        SET
+            customer_unique_id = :customer_unique_id,
+            customer_zip_code_prefix = :customer_zip_code_prefix,
+            customer_city = :customer_city,
+            customer_state = :customer_state,
+            writed_date = CURRENT_TIMESTAMP
+        WHERE
+            customer_id = :customer_id
+        ]]>
+    </query>
+
+    <query id="insertCustomer">
+        <![CDATA[
+        INSERT INTO customers (customer_id, customer_unique_id, customer_zip_code_prefix, customer_city, customer_state, created_date, writed_date)
+        VALUES (:customer_id, :customer_unique_id, :customer_zip_code_prefix, :customer_city, :customer_state, :created_date, :writed_date)
+        ]]>
+    </query>
+
+    <query id="getProductById">
+        <![CDATA[
+            select * from products where product_id = :product_id
+        ]]>
+    </query>
+
+    <query id="updateProductById">
+        <![CDATA[
+        UPDATE products
+        SET product_name_lenght = :product_name_lenght,
+            product_description_lenght = :product_description_lenght,
+            product_photos_qty = :product_photos_qty,
+            product_weight_g = :product_weight_g,
+            product_length_cm = :product_length_cm,
+            product_height_cm = :product_height_cm,
+            product_width_cm = :product_width_cm,
+            writed_date = CURRENT_TIMESTAMP
+        WHERE product_id = :product_id
+        ]]>
+    </query>
+
+    <query id="insertProduct">
+        <![CDATA[
+        INSERT INTO products (product_id, product_category_name, product_name_lenght, product_description_lenght,
+                              product_photos_qty, product_weight_g, product_length_cm, product_height_cm, product_width_cm,
+                              created_date, writed_date)
+        VALUES (:product_id, :product_category_name, :product_name_lenght, :product_description_lenght, :product_photos_qty,
+                :product_weight_g, :product_length_cm, :product_height_cm, :product_width_cm, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+        ]]>
+    </query>
+
+</queries>

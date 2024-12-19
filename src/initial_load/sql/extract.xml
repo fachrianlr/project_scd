@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<queries>
+    <query id="get_customers">
+        <![CDATA[
+        SELECT * FROM public.customers
+        ]]>
+    </query>
+
+    <query id="get_products">
+        <![CDATA[
+        SELECT * FROM products
+        ]]>
+    </query>
+
+    <query id="get_sellers">
+        <![CDATA[
+        SELECT * FROM sellers
+        ]]>
+    </query>
+
+    <query id="get_geolocation">
+        <![CDATA[
+        SELECT * FROM geolocation
+        ]]>
+    </query>
+
+    <query id="get_order_items">
+        <![CDATA[
+        SELECT * FROM order_items
+        ]]>
+    </query>
+
+    <query id="get_order_payments">
+        <![CDATA[
+        SELECT * FROM order_payments
+        ]]>
+    </query>
+
+    <query id="get_order_reviews">
+        <![CDATA[
+        SELECT * FROM order_reviews
+        ]]>
+    </query>
+
+    <query id="get_orders">
+        <![CDATA[
+        SELECT * FROM orders
+        ]]>
+    </query>
+
+    <query id="get_product_category_name_translation">
+        <![CDATA[
+        SELECT * FROM product_category_name_translation
+        ]]>
+    </query>
+
+</queries>

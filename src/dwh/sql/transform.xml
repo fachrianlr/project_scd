@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<queries>
+    <query id="getCustomerByWritedDateStg">
+        <![CDATA[
+            select * from customers where writed_date::date = :process_date
+        ]]>
+    </query>
+
+    <query id="getCustomerByIdDwh">
+        <![CDATA[
+            select * from dim_customer where customer_id = :customer_id
+        ]]>
+    </query>
+
+    <query id="insertCustomerDwh">
+        <![CDATA[
+            INSERT INTO public.dim_customer (customer_id, customer_unique_id, customer_zip_code_prefix,
+            customer_city, customer_state, effective_start_date, effective_end_date, is_active, created_date, writed_date)
+            VALUES (:customer_id, :customer_unique_id, :customer_zip_code_prefix,
+            :customer_city, :customer_state, CURRENT_TIMESTAMP, :effective_end_date, :is_active, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+        ]]>
+    </query>
+
+    <query id="nonActiveCustomerDwh">
+        <![CDATA[
+        UPDATE public.dim_customer
+        SET effective_end_date=CURRENT_TIMESTAMP,
+            is_active= FALSE,
+            writed_date = CURRENT_TIMESTAMP
+        WHERE customer_id = :customer_id
+          AND is_active = True
+        ]]>
+    </query>
+
+    <query id="getProductByWritedDateStg">
+        <![CDATA[
+            select * from products where writed_date::date = :process_date
+        ]]>
+    </query>
+
+    <query id="getProductByIdDwh">
+        <![CDATA[
+            select * from dim_product where product_id = :product_id
+        ]]>
+    </query>
+
+    <query id="insertProductDwh">
+        <![CDATA[
+            INSERT INTO public.dim_product (product_id, product_category_name, product_name_length,
+            product_description_length, product_photos_qty, product_weight_g, product_length_cm, product_height_cm,
+            product_width_cm)
+            VALUES (:product_id, :product_category_name, :product_name_length, :product_description_length,
+            :product_photos_qty, :product_weight_g, :product_length_cm, :product_height_cm, :product_width_cm)
+        ]]>
+    </query>
+
+    <query id="nonActiveProductDwh">
+        <![CDATA[
+        UPDATE public.dim_product
+        SET effective_end_date=CURRENT_TIMESTAMP,
+            is_active= FALSE
+        WHERE product_id = :product_id
+          AND is_active = True
+        ]]>
+    </query>
+
+    <query id="updateProductDwh">
+        <![CDATA[
+        UPDATE dim_product
+        SET product_name_length        = :product_name_length,
+            product_description_length = :product_description_length,
+            writed_date = CURRENT_TIMESTAMP
+        WHERE product_id = :product_id
+        ]]>
+    </query>
+</queries>

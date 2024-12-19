@@ -1,0 +1,7 @@
+beautifulsoup4
+pandas
+sqlalchemy
+luigi
+playwright
+python-dotenv
+psycopg2-binary

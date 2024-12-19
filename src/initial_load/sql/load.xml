@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<queries>
+    <query id="delete_stg_data">
+        <![CDATA[
+        truncate table order_items cascade;
+        truncate table order_payments cascade;
+        truncate table order_reviews cascade;
+        truncate table orders cascade;
+        truncate table product_category_name_translation cascade;
+        truncate table geolocation cascade;
+        truncate table customers cascade;
+        truncate table products cascade;
+        truncate table sellers cascade;
+        ]]>
+    </query>
+
+</queries>

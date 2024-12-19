@@ -1,0 +1,127 @@
+<?xml version="1.0"?>
+<queries>
+
+    <query id="delete_data_dwh">
+        <![CDATA[
+        truncate table dim_customer cascade;
+        truncate table dim_product cascade;
+        truncate table dim_seller cascade;
+        truncate table fact_customer_feedback cascade;
+        truncate table fact_order cascade;
+        truncate table fact_order_items cascade;
+        truncate table fact_sales_analysis cascade;
+        ]]>
+    </query>
+
+    <query id="getCustomer">
+        <![CDATA[
+        select * from customers
+        ]]>
+    </query>
+
+    <query id="getProduct">
+        <![CDATA[
+        select product_id,
+               product_category_name,
+               product_name_lenght as product_name_length,
+               product_description_lenght as product_description_length,
+               product_photos_qty,
+               product_weight_g,
+               product_length_cm,
+               product_height_cm,
+               product_width_cm
+        from products
+        ]]>
+    </query>
+
+    <query id="getSeller">
+        <![CDATA[
+        select * from sellers
+        ]]>
+    </query>
+
+    <query id="getOrderStg">
+        <![CDATA[
+        select order_id,
+               customer_id,
+               order_status,
+               order_approved_at,
+               order_purchase_timestamp as order_purchase_date,
+               order_delivered_carrier_date,
+               order_delivered_customer_date
+        from orders
+        ]]>
+    </query>
+
+    <query id="getOrderStg">
+        <![CDATA[
+        select order_id,
+               customer_id,
+               order_status,
+               order_approved_at,
+               order_purchase_timestamp,
+               order_delivered_carrier_date,
+               order_delivered_customer_date
+        from orders
+        ]]>
+    </query>
+
+    <query id="getCustomerDwh">
+        <![CDATA[
+        select customer_sk, customer_id
+        from dim_customer
+        ]]>
+    </query>
+
+    <query id="getOrderItemStg">
+        <![CDATA[
+        select order_id, order_item_id, product_id, seller_id, shipping_limit_date, price, freight_value
+        from order_items
+        ]]>
+    </query>
+
+    <query id="getFactOrderDwh">
+        <![CDATA[
+        select order_id, order_sk
+        from fact_order
+        ]]>
+    </query>
+
+    <query id="getProductDwh">
+        <![CDATA[
+        select product_id, product_sk
+        from dim_product
+        ]]>
+    </query>
+
+    <query id="getSellerDwh">
+        <![CDATA[
+        select seller_id, seller_sk
+        from dim_seller
+        ]]>
+    </query>
+
+    <query id="getOrderReviewStg">
+        <![CDATA[
+        select review_id, order_id, review_score, review_comment_title, review_comment_message, review_creation_date
+        from order_reviews
+        ]]>
+    </query>
+
+    <query id="getFactSalesAnalysis">
+        <![CDATA[
+        SELECT oi.product_id                    AS product_id,
+               o.order_purchase_timestamp::date AS order_date,
+               SUM(op.payment_value)            AS total_sales,
+               COUNT(oi.product_id)             AS total_quantity
+        FROM order_items oi
+                 JOIN
+             orders o ON oi.order_id = o.order_id
+                 JOIN
+             order_payments op ON oi.order_id = op.order_id
+        WHERE o.order_status IN ('delivered', 'shipped', 'invoiced')
+        GROUP BY o.order_purchase_timestamp::date, oi.product_id
+        ORDER BY order_date
+        ]]>
+    </query>
+</queries>
